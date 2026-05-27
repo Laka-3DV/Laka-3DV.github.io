@@ -7,7 +7,7 @@
 
 # Site Settings
 title                    : "Shaocheng Yan"
-# description              : "shaochengyan@whu.edu.cn"
+description              : "Somewhere, something incredible is waiting to be known."
 repository               : "Laka-3DV/Laka-3DV.github.io"
 google_scholar_stats_use_cdn : true
 
@@ -23,9 +23,8 @@ google_analytics_id      :  # get google_analytics_id from https://analytics.goo
 author:
   name             : "Shaocheng Yan (颜绍程)"
   avatar           : "images/cola.jpg"
-  bio              : "Wuhan University"
-  # location         : "Wuhan, China"
-  location         : 
+  bio              :                       # removed — "Wuhan University" was redundant with location
+  location         : "Wuhan, China"
   employer         :
   pubmed           : 
   googlescholar    :   # moved to About Me quick-link chip
