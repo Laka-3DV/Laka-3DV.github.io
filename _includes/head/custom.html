@@ -20,4 +20,178 @@
 </script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML' async></script>
 
+<!-- =========================================================
+     Apple-inspired site-wide overrides (typography + masthead)
+     ========================================================= -->
+<style>
+  :root {
+    --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+    --font-text: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+    --ink-1: #1d1d1f;     /* Apple's near-black for headings */
+    --ink-2: #424245;     /* Apple's body text */
+    --ink-3: #6e6e73;     /* Apple's secondary text */
+    --accent: #00788c;    /* Site accent (teal) */
+  }
+
+  /* Global typography */
+  html, body, .page__content, .page__title, .page__lead,
+  .author__name, .author__bio, .author__urls {
+    font-family: var(--font-text);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    -webkit-text-size-adjust: 100%;
+  }
+  body, .page__content { color: var(--ink-2); }
+
+  h1, h2, h3, h4, h5, h6,
+  .page__title { font-family: var(--font-display); color: var(--ink-1); }
+  h1, h2, h3 { font-weight: 600; letter-spacing: -0.018em; }
+  .page__content h2 { margin-top: 1.8em; margin-bottom: .6em; }
+  .page__content h3 { font-weight: 600; margin-top: 1.4em; }
+
+  strong, b { color: var(--ink-1); font-weight: 600; }
+
+  /* Body links — quieter, Apple-style.
+     Scope tightly to paragraph/list/table cells so headings & their anchors
+     never inherit underlines or border-bottoms. */
+  .page__content p a:not(.btn):not(.quick-link),
+  .page__content li a:not(.btn):not(.quick-link),
+  .page__content td a:not(.btn):not(.quick-link) {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(0,120,140,.25);
+    transition: border-color .15s, color .15s;
+  }
+  .page__content p a:not(.btn):not(.quick-link):hover,
+  .page__content li a:not(.btn):not(.quick-link):hover,
+  .page__content td a:not(.btn):not(.quick-link):hover {
+    color: #005f70;
+    border-bottom-color: var(--accent);
+  }
+
+  /* Headings: absolutely no decoration on hover.
+     Defends against Jekyll auto-anchors, academicpages defaults,
+     and the page-content link rules above. */
+  .page__content h1, .page__content h2, .page__content h3,
+  .page__content h4, .page__content h5, .page__content h6 {
+    border-bottom: none !important;
+    text-decoration: none !important;
+  }
+  .page__content h1 a, .page__content h2 a, .page__content h3 a,
+  .page__content h4 a, .page__content h5 a, .page__content h6 a,
+  .page__content h1 a:hover, .page__content h2 a:hover, .page__content h3 a:hover,
+  .page__content h4 a:hover, .page__content h5 a:hover, .page__content h6 a:hover {
+    color: inherit !important;
+    text-decoration: none !important;
+    border-bottom: none !important;
+    background: none !important;
+  }
+
+  /* =========================================================
+     Masthead — Apple translucent bar
+     ========================================================= */
+  .masthead {
+    background: rgba(255, 255, 255, 0.72) !important;
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: none !important;
+  }
+  .masthead__inner-wrap {
+    font-family: var(--font-display) !important;
+    font-size: 14px;
+    letter-spacing: -0.005em;
+    padding: 0.4em 1em !important;
+  }
+  .greedy-nav { background: transparent !important; }
+  .greedy-nav .visible-links a {
+    color: var(--ink-1) !important;
+    font-weight: 400 !important;
+    padding: 6px 12px !important;
+    margin: 0 2px;
+    border-radius: 6px;
+    opacity: 0.78;
+    transition: opacity .15s, color .15s, background-color .15s;
+    border: none !important;
+    outline: none !important;
+  }
+  .greedy-nav .visible-links a:hover {
+    color: var(--accent) !important;
+    opacity: 1;
+    background-color: rgba(0, 120, 140, 0.06);
+  }
+  .greedy-nav .visible-links a:active {
+    background-color: rgba(0, 120, 140, 0.12);
+  }
+  /* Suppress browser default focus ring on mouse click, keep for keyboard-only */
+  .greedy-nav .visible-links a:focus { outline: none !important; }
+  .greedy-nav .visible-links a:focus-visible {
+    outline: 2px solid var(--accent) !important;
+    outline-offset: 2px;
+  }
+  /* Kill academicpages default animated underline bar on nav hover */
+  .greedy-nav .visible-links a::before {
+    display: none !important;
+    content: none !important;
+    background: transparent !important;
+    height: 0 !important;
+    transform: none !important;
+  }
+  .masthead__menu-item--lg a {
+    font-weight: 500 !important;
+    color: var(--ink-1) !important;
+    opacity: 1 !important;
+  }
+
+  /* Refined hamburger button (used when nav overflows) */
+  .greedy-nav button {
+    background: transparent !important;
+    border: none !important;
+    padding: 8px 12px !important;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: opacity .15s;
+  }
+  .greedy-nav button:hover { opacity: 0.7; }
+  .greedy-nav .navicon,
+  .greedy-nav .navicon::before,
+  .greedy-nav .navicon::after {
+    background-color: var(--ink-1) !important;
+    height: 1.5px !important;
+    border-radius: 1px !important;
+    transition: transform .2s ease;
+  }
+  .greedy-nav .navicon { width: 20px !important; }
+
+  /* Hidden-links dropdown — clean panel */
+  .greedy-nav .hidden-links {
+    background: rgba(255, 255, 255, 0.96) !important;
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+    border-radius: 10px !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,.10) !important;
+    border: 1px solid rgba(0,0,0,.06) !important;
+    padding: 6px !important;
+  }
+  .greedy-nav .hidden-links a {
+    color: var(--ink-1) !important;
+    border-radius: 6px;
+    padding: 8px 12px !important;
+    font-weight: 400 !important;
+  }
+  .greedy-nav .hidden-links a:hover {
+    background: rgba(0,120,140,.08) !important;
+    color: var(--accent) !important;
+  }
+  .greedy-nav .hidden-links::before,
+  .greedy-nav .hidden-links::after { display: none !important; }
+
+  /* Sidebar refinement */
+  .author__name { font-weight: 600 !important; letter-spacing: -0.015em; }
+  .author__bio { color: var(--ink-3); font-weight: 400; }
+</style>
+
+<!-- Official GitHub Buttons widget — used for star counts on Selected Projects -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
 <!-- end custom head snippets -->

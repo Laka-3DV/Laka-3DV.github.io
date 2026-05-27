@@ -1,0 +1,6 @@
+@article{gu2026ulf,
+  title={ULF-Loc: Unbiased Landmark Feature for Robust Visual Localization with 3D Gaussian Splatting},
+  author={Gu, Yingdong and Yan, Shaocheng and Zhao, Zhenjun and Kou, Yuan and Luo, Jianxin and Shi, Pengcheng and Li, Jiayuan},
+  journal={arXiv preprint arXiv:2605.04730},
+  year={2026}
+}

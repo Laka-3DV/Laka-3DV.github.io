@@ -9,14 +9,21 @@ main:
   - title: "Publications"
     url: "/#-publications"
 
+  - title: "Projects"
+    url: "/#-selected-projects"
+
+  - title: "Talks"
+    url: "/#-invited-talks"
+
   - title: "Honors and Awards"
     url: "/#-honors-and-awards"
 
   - title: "Educations"
     url: "/#-educations"
 
-  # - title: "Invited Talks"
-  #   url: "/#-invited-talks"
+  # Drop a PDF at /files/cv.pdf and uncomment the entry below to expose a CV link.
+  # - title: "CV"
+  #   url: "/files/cv.pdf"
 
   # - title: "Internships"
   #   url: "/#-internships"

@@ -28,7 +28,8 @@ author:
   location         : 
   employer         :
   pubmed           : 
-  googlescholar    : "https://scholar.google.com/citations?user=2h_BHmoAAAAJ"
+  googlescholar    :   # moved to About Me quick-link chip
+  # googlescholar  : "https://scholar.google.com/citations?user=2h_BHmoAAAAJ"
   # email            : "shaochengyan@whu.edu.cn"
   email            : 
   researchgate     :  # e.g., "https://www.researchgate.net/profile/yourprofile"
@@ -39,8 +40,8 @@ author:
   flickr           :
   facebook         :
   foursquare       :
-  # github           : # e.g., "github username"
-  github           : "Laka-3DV"
+  github           :   # moved to About Me quick-link chip
+  # github         : "Laka-3DV"
   google_plus      :
   keybase          :
   instagram        :
