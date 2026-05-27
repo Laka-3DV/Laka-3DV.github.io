@@ -55,20 +55,25 @@
   /* Body links — quieter, Apple-style.
      Scope tightly to paragraph/list/table cells so headings & their anchors
      never inherit underlines or border-bottoms. */
-  .page__content p a:not(.btn):not(.quick-link),
-  .page__content li a:not(.btn):not(.quick-link),
-  .page__content td a:not(.btn):not(.quick-link) {
+  .page__content p a:not(.btn):not(.quick-link):not(.venue-label):not(.paper-link),
+  .page__content li a:not(.btn):not(.quick-link):not(.venue-label):not(.paper-link),
+  .page__content td a:not(.btn):not(.quick-link):not(.venue-label):not(.paper-link) {
     color: var(--accent);
     text-decoration: none;
     border-bottom: 1px solid rgba(0,120,140,.25);
     transition: border-color .15s, color .15s;
   }
-  .page__content p a:not(.btn):not(.quick-link):hover,
-  .page__content li a:not(.btn):not(.quick-link):hover,
-  .page__content td a:not(.btn):not(.quick-link):hover {
+  .page__content p a:not(.btn):not(.quick-link):not(.venue-label):not(.paper-link):hover,
+  .page__content li a:not(.btn):not(.quick-link):not(.venue-label):not(.paper-link):hover,
+  .page__content td a:not(.btn):not(.quick-link):not(.venue-label):not(.paper-link):hover {
     color: #005f70;
     border-bottom-color: var(--accent);
   }
+  /* Paper-name jump links — transparent anchor wrapper.
+     `.pub-name` already renders as single teal site-wide, so we just need
+     to strip default link styling here. */
+  a.paper-link { text-decoration: none !important; border-bottom: none !important; color: inherit; transition: opacity .15s; }
+  a.paper-link:hover { opacity: 0.78; }
 
   /* Headings: absolutely no decoration on hover.
      Defends against Jekyll auto-anchors, academicpages defaults,
@@ -186,12 +191,116 @@
   .greedy-nav .hidden-links::before,
   .greedy-nav .hidden-links::after { display: none !important; }
 
-  /* Sidebar refinement */
+  /* Sidebar refinement (kept for legacy — sidebar itself is now hidden below) */
   .author__name { font-weight: 600 !important; letter-spacing: -0.015em; }
   .author__bio { color: var(--ink-3); font-weight: 400; }
+
+  /* =========================================================
+     Single-column layout: hide sidebar, expand main full-width
+     ========================================================= */
+  .sidebar.sticky,
+  .sidebar { display: none !important; }
+  .page {
+    float: none !important;
+    width: 100% !important;
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+  }
+
+  /* Top hero row — small avatar + big name (replaces sidebar identity) */
+  .hero-row {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin: 1.2em 0 1.6em;
+  }
+  .hero-avatar {
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,.08);
+  }
+  .hero-name {
+    font-family: var(--font-display);
+    font-size: 1.7em;
+    font-weight: 600;
+    letter-spacing: -0.018em;
+    margin: 0;
+    color: var(--ink-1);
+    line-height: 1.2;
+  }
+  @media (max-width: 600px) {
+    .hero-avatar { width: 60px; height: 60px; }
+    .hero-name { font-size: 1.4em; }
+  }
 </style>
 
 <!-- Official GitHub Buttons widget — used for star counts on Selected Projects -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<!-- Hamburger dropdown — hover to open + grace-period close so user can bridge
+     the gap between the button and the dropdown panel without it closing on them.
+     Also toggles `.close` on the button so its three bars animate into an X
+     (academicpages default styles in _sass/_utilities.scss). -->
+<style>
+  /* shrink the gap between button and dropdown so it's a small visual bridge */
+  .greedy-nav .hidden-links { margin-top: 4px !important; }
+  /* a transparent invisible pad above the dropdown that extends its hit area
+     upward to overlap the button area — bridges the bottom-of-button to top-of-panel */
+  .greedy-nav .hidden-links::before { display: none !important; }
+  .greedy-nav .hidden-links { padding-top: 8px !important; }
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var nav = document.getElementById('site-nav');
+  if (!nav) return;
+  var hidden = nav.querySelector('.hidden-links');
+  if (!hidden) return;
+  var btn = nav.querySelector('button');
+
+  var closeTimer = null;
+  function open() {
+    if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+    hidden.classList.remove('hidden');
+    if (btn) btn.classList.add('close');
+  }
+  function forceClose() {
+    if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+    hidden.classList.add('hidden');
+    if (btn) btn.classList.remove('close');
+  }
+  function scheduleClose() {
+    if (closeTimer) clearTimeout(closeTimer);
+    closeTimer = setTimeout(forceClose, 250);  // 250ms grace period to bridge gap
+  }
+  function cancelClose() {
+    if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+  }
+
+  // hover the hamburger button → open (cancels any pending close)
+  if (btn) {
+    btn.addEventListener('mouseenter', open);
+    btn.addEventListener('mouseleave', scheduleClose);
+  }
+  // hovering the dropdown panel keeps it open; leaving schedules a close
+  hidden.addEventListener('mouseenter', cancelClose);
+  hidden.addEventListener('mouseleave', scheduleClose);
+
+  // outside click closes immediately
+  document.addEventListener('click', function (e) {
+    if (!hidden.classList.contains('hidden') && !nav.contains(e.target)) forceClose();
+  });
+  // ESC closes immediately
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !hidden.classList.contains('hidden')) forceClose();
+  });
+  // clicking a link inside the dropdown — close after navigation/scroll
+  hidden.addEventListener('click', function (e) {
+    if (e.target.tagName === 'A') setTimeout(forceClose, 120);
+  });
+});
+</script>
 
 <!-- end custom head snippets -->
